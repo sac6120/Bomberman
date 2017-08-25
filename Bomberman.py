@@ -14,15 +14,18 @@ class Bomberman(Person):
     def __init__(self, x, y):
         Person.__init__(self, x, y)
 
+    def class_name(self):
+        """ class_name returns the name of the class of this instance. """
+        return "Bomberman"
+
     def design(self):
         """ design returns design array for Bomberman. """
         return [[Fore.YELLOW + Style.BRIGHT + '[', '^', '^', ']' + Style.RESET_ALL], [Fore.YELLOW + Style.BRIGHT + ' ', ']', '[', ' ' + Style.RESET_ALL]]
 
     def handle_input(self, instance_of_board, key):
         """ handle_input makes the Bomberman act according to the input. """
-        from Bomb import Bomb
         if key[1] is True:
-            instance_of_board.board[self.x_cord][self.y_cord].append(Bomb(self.x_cord, self.y_cord))
+            instance_of_board.create_bomb(self.x_cord, self.y_cord)
         if key[0] == '':
             return
         xnew = self.x_cord + Bomberman.key_directions[key[0]][0]
@@ -32,9 +35,4 @@ class Bomberman(Person):
 
     def is_on_enemy(self, instance_of_board):
         """ is_on_enemy checks whether Bomberman is on Enemy. """
-        from Enemy import Enemy
-        for i in instance_of_board.board[self.x_cord][self.y_cord]:
-            if isinstance(i, Enemy):
-                return True
-        return False
-    
+        return instance_of_board.contains(self.x_cord, self.y_cord, 'Enemy')

@@ -5,6 +5,10 @@ class Lives(object):
     def __init__(self):
         self.lives = 3
 
+    def class_name(self):
+        """ class_name returns the name of the class of this instance. """
+        return "Lives"
+
     def update_lives(self):
         """ updateLives is called when the Bomberman hits an enemy or
         the explosion. """

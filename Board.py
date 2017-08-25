@@ -20,6 +20,10 @@ class Board(object):
         self.enemy_count = 5
         self.board = self.generate_board()
 
+    def class_name(self):
+        """ class_name returns the name of the class of this instance. """
+        return "Board"
+
     def generate_board(self):
         """ generate_board generates the board to be used in the game. """
         to_return = []
@@ -60,16 +64,26 @@ class Board(object):
 
         return to_return
 
-    def contains(self, x, y, class_name):
+    def contains(self, x_cord, y_cord, class_name):
         """ contains checks if cell [x, y] contains an instance of
-        Class class_name. """
-        if x < 0 or x >= self.row:
+        Class class_name or any instance which contains a method
+        class_name which returns the argument class_name given
+        as input to this method. """
+        if x_cord < 0 or x_cord >= self.row:
             return False
-        if y < 0 or y >= self.col:
+        if y_cord < 0 or y_cord >= self.col:
             return False
-        for i in self.board[x][y]:
-            if isinstance(i, class_name):
-                return True
+        for i in self.board[x_cord][y_cord]:
+            try:
+                if isinstance(i, class_name):
+                    return True
+            except TypeError:
+                pass
+            try:
+                if i.class_name() == class_name:
+                    return True
+            except AttributeError:
+                pass
         return False
 
     def remove(self, instance):
@@ -93,20 +107,21 @@ class Board(object):
             for j in range(self.col * self.cell_col):
                 curr_row.append([])
             board_to_print.append(curr_row)
-        
+
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 design_arr = [[' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ']]
                 found = False
                 if len(self.board[i][j]) > 0:
-                    priority_list = [Enemy, Bomberman, Bomb, Brick, Wall, Explosion]
+                    priority_list = [Enemy, Bomberman, Bomb,\
+                     Brick, Wall, Explosion]
                     for class_name in priority_list:
                         for instance in self.board[i][j]:
                             if isinstance(instance, class_name):
                                 if not found:
                                     design_arr = instance.design()
                                     found = True
-                                
+
                 for num in range(2):
                     design_arr[num][0] = Back.BLACK + design_arr[num][0]
                     design_arr[num][3] = design_arr[num][3] + Style.RESET_ALL
@@ -120,3 +135,19 @@ class Board(object):
         for i in board_to_print:
             string_arr.append(''.join(i) + '\n')
         print ''.join(string_arr)
+
+    def create_explosion(self, x_cord, y_cord):
+        """ Creates an explosion at coordinates x_cord and y_cord on board. """
+        if x_cord < 0 or y_cord < 0 or \
+          x_cord >= self.row or y_cord >= self.col:
+            return
+        explosion = Explosion(x_cord, y_cord)
+        self.board[x_cord][y_cord].append(explosion)
+
+    def create_bomb(self, x_cord, y_cord):
+        """ Creates a bomb at coordinates x_cord and y_cord on board. """
+        if x_cord < 0 or y_cord < 0 or \
+          x_cord >= self.row or y_cord >= self.col:
+            return
+        bomb = Bomb(x_cord, y_cord)
+        self.board[x_cord][y_cord].append(bomb)

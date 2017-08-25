@@ -6,19 +6,20 @@ class Person(object):
         self.x_cord = x
         self.y_cord = y
 
+    def class_name(self):
+        """ class_name returns the name of the class of this instance. """
+        return "Person"
+
     def can_person_move_here(self, xnew, ynew, instance_of_board):
         """ can_person_move_here checks if the Person can move on the given
         cell. """
-        from Wall import Wall
-        from Brick import Brick
-        from Bomb import Bomb
         if abs(xnew - self.x_cord) + abs(ynew - self.y_cord) is not 1:
             return False
-        if instance_of_board.contains(xnew, ynew, Wall):
+        if instance_of_board.contains(xnew, ynew, 'Wall'):
             return False
-        if instance_of_board.contains(xnew, ynew, Brick):
+        if instance_of_board.contains(xnew, ynew, 'Brick'):
             return False
-        if instance_of_board.contains(xnew, ynew, Bomb):
+        if instance_of_board.contains(xnew, ynew, 'Bomb'):
             return False
         return True
 

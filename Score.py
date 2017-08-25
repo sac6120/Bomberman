@@ -6,6 +6,10 @@ class Score(object):
     def __init__(self):
         self.score = 0
 
+    def class_name(self):
+        """ class_name returns the name of the class of this instance. """
+        return "Score"
+
     def update_score_destroyed_enemy(self):
         """ updateScoreDestroyedEnemy adds to score points for killing an
         enemy. """

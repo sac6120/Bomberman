@@ -14,6 +14,10 @@ class Bomb(object):
         self.y_cord = y
         self.time_to_explode = 3
 
+    def class_name(self):
+        """ class_name returns the name of the class of this instance. """
+        return "Bomb"
+
     def design(self):
         """ design return the design array for bomb. """
         return [[Fore.CYAN + str(self.time_to_explode), str(self.time_to_explode),
@@ -21,15 +25,13 @@ class Bomb(object):
 
     def reduce_time_or_explode(self, instance_of_board):
         """ reduce_time_or_explode reduces bomb time or explodes it. """
-        from Bomberman import Bomberman
-        from Explosion import Explosion
-        if not instance_of_board.contains(self.x_cord, self.y_cord, Bomberman):
+        if not instance_of_board.contains(self.x_cord, self.y_cord, 'Bomberman'):
             self.time_to_explode = self.time_to_explode - 1
             if self.time_to_explode < 0:
-                instance_of_board.board[self.x_cord][self.y_cord].append(Explosion(self.x_cord, self.y_cord))
+                instance_of_board.create_explosion(self.x_cord, self.y_cord)
                 for i in [1, 2]:
                     for direction in Bomb.directions4:
                         xnew = self.x_cord + i * Bomb.directions4[direction][0]
                         ynew = self.y_cord + i * Bomb.directions4[direction][1]
-                        instance_of_board.board[xnew][ynew].append(Explosion(xnew, ynew))
-                instance_of_board.remove(self)        
+                        instance_of_board.create_explosion(xnew, ynew)
+                instance_of_board.remove(self)

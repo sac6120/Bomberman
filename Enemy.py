@@ -19,6 +19,10 @@ class Enemy(Person):
         self.straight_time = -1
         self.direction = -1
     
+    def class_name(self):
+        """ class_name returns the name of the class of this instance. """
+        return "Enemy"
+    
     def design(self):
         return [[Fore.GREEN + '-', '@', '@', '-' + Style.RESET_ALL], [Fore.BLUE + Style.BRIGHT +  ' ', 'v', 'v', ' ' + Style.RESET_ALL]] 
 

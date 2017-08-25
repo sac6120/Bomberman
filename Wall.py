@@ -7,6 +7,10 @@ class Wall(object):
         self.x_cord = x_cord
         self.y_cord = y_cord
 
+    def class_name(self):
+        """ class_name returns the name of the class of this instance. """
+        return "Wall"
+
     def design(self):
         """ design returns the design list for Wall object. """
         return [[Fore.WHITE + '#', '#', '#', '#' + Style.RESET_ALL],
