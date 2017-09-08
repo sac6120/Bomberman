@@ -36,12 +36,12 @@ class Game(object):
                 if keyboard.is_pressed(key):
                     self.direction_key = key
             except:
-                pass
+                raise ValueError('Use sudo command')
         try:
             if keyboard.is_pressed('b'):
                 self.bomb_key = True
         except:
-            pass
+            raise ValueError('Use sudo command')
 
     def get_enemies(self):
         """ get_enemies returns a list of enemies currently on the board. """
