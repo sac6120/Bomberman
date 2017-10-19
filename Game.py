@@ -4,7 +4,8 @@ import random
 import os
 import time
 import keyboard
-from colorama import init
+import sys
+from colorama import init, Fore, Style
 
 from Brick import Brick
 from Explosion import Explosion
@@ -36,12 +37,12 @@ class Game(object):
                 if keyboard.is_pressed(key):
                     self.direction_key = key
             except:
-                raise ValueError('Use sudo command')
+                pass
         try:
             if keyboard.is_pressed('b'):
                 self.bomb_key = True
         except:
-            raise ValueError('Use sudo command')
+            pass
 
     def get_enemies(self):
         """ get_enemies returns a list of enemies currently on the board. """
@@ -129,6 +130,12 @@ class Game(object):
 
     def game_loop(self):
         """ game_loop implements the game inf loop. """
+        try:
+            if keyboard.is_pressed('a'):
+                pass
+        except: 
+                print(Fore.RED + 'Use sudo for playing the Game' + Style.RESET_ALL)
+                sys.exit()
         while True:
             self.board.display()
             print str(self.score.score) +    "        " + str(self.lives.lives)
