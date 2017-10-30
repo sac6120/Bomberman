@@ -32,3 +32,9 @@ sudo python main.py
 - Person.py: Code for the movement of objects.
 - main.py: The enter point of the game.
 
+## Controls
+- press A to move left
+- press D to move right
+- press S to move down
+- press W to move up
+- press B to drop bomb
